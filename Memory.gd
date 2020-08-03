@@ -11,7 +11,7 @@ onready var anim_tree = $AnimationTree
 onready var anim_state = anim_tree.get("parameters/playback")
 
 func _ready():
-	$Delay.start(rand_range(1, 4))
+	$Delay.start(rand_range(1, 2))
 
 func _on_PositionTimer_timeout():
 	if !is_active or !is_active2: return

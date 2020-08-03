@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://zones_boxes/hurtbox.tscn" type="PackedScene" id=1]
+[ext_resource path="res://sprites/tombstone.png" type="Texture" id=2]
+[ext_resource path="res://Tombstone.gd" type="Script" id=3]
+
+[node name="Tombstone" type="Sprite"]
+position = Vector2( 0, -24.2204 )
+texture = ExtResource( 2 )
+script = ExtResource( 3 )
+
+[node name="hurtbox" parent="." instance=ExtResource( 1 )]
+collision_layer = 0
+collision_mask = 32
+
+[node name="CollisionPolygon2D" parent="hurtbox" index="0"]
+polygon = PoolVector2Array( -8, 24.2204, -8, -39.7796, 8, -39.7796, 8, 24.2204 )
+[connection signal="area_entered" from="hurtbox" to="." method="_on_hurtbox_area_entered"]
+
+[editable path="hurtbox"]
