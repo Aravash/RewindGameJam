@@ -111,6 +111,4 @@ animations = [ {
 position = Vector2( 0, -8 )
 rotation = 3.14159
 frames = SubResource( 25 )
-frame = 20
-playing = true
 script = ExtResource( 1 )
