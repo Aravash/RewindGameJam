@@ -1,0 +1,61 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://MenuScreen.gd" type="Script" id=1]
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MainMenu" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SelectLevel" type="Button" parent="MainMenu"]
+margin_left = 88.0
+margin_top = 88.0
+margin_right = 232.0
+margin_bottom = 116.0
+text = "Play Game"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Exit" type="Button" parent="MainMenu"]
+margin_left = 96.0
+margin_top = 128.0
+margin_right = 224.0
+margin_bottom = 148.0
+text = "Exit"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LevelSelect" type="Control" parent="."]
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="ReturnToMain" type="Button" parent="LevelSelect"]
+margin_left = 8.0
+margin_top = 152.0
+margin_right = 56.0
+margin_bottom = 172.0
+text = "Back"
+
+[node name="Test" type="Button" parent="LevelSelect"]
+margin_left = 120.0
+margin_top = 64.0
+margin_right = 201.0
+margin_bottom = 84.0
+text = "Test Scene"
+[connection signal="pressed" from="MainMenu/SelectLevel" to="." method="_on_SelectLevel_pressed"]
+[connection signal="pressed" from="MainMenu/Exit" to="." method="_on_Exit_pressed"]
+[connection signal="pressed" from="LevelSelect/ReturnToMain" to="." method="_on_ReturnToMain_pressed"]
+[connection signal="pressed" from="LevelSelect/Test" to="." method="_on_Test_pressed"]
