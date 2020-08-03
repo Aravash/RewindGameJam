@@ -70,7 +70,7 @@ tracks/0/keys = {
 "values": [ 23, 22 ]
 }
 
-[sub_resource type="Animation" id=26]
+[sub_resource type="Animation" id=5]
 resource_name = "hit"
 length = 2.2
 tracks/0/type = "value"
@@ -100,7 +100,7 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=6]
 length = 1.4
 loop = true
 tracks/0/type = "value"
@@ -116,7 +116,7 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3 ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=7]
 length = 1.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -131,7 +131,7 @@ tracks/0/keys = {
 "values": [ 16, 17, 18, 19, 20, 21, 18, 22 ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=8]
 length = 0.6
 loop = true
 tracks/0/type = "value"
@@ -147,27 +147,23 @@ tracks/0/keys = {
 "values": [ 8, 9, 10, 11, 12, 13 ]
 }
 
-[sub_resource type="AnimationNodeAnimation" id=8]
+[sub_resource type="AnimationNodeAnimation" id=9]
 animation = "attack"
 
-[sub_resource type="AnimationNodeAnimation" id=9]
+[sub_resource type="AnimationNodeAnimation" id=10]
 animation = "fall"
 
-[sub_resource type="AnimationNodeAnimation" id=27]
+[sub_resource type="AnimationNodeAnimation" id=11]
 animation = "hit"
 
-[sub_resource type="AnimationNodeAnimation" id=10]
+[sub_resource type="AnimationNodeAnimation" id=12]
 animation = "idle"
 
-[sub_resource type="AnimationNodeAnimation" id=11]
+[sub_resource type="AnimationNodeAnimation" id=13]
 animation = "jump"
 
-[sub_resource type="AnimationNodeAnimation" id=12]
+[sub_resource type="AnimationNodeAnimation" id=14]
 animation = "run"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=13]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=14]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=15]
 
@@ -187,27 +183,31 @@ animation = "run"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=23]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=28]
+[sub_resource type="AnimationNodeStateMachineTransition" id=24]
 
-[sub_resource type="AnimationNodeStateMachine" id=24]
+[sub_resource type="AnimationNodeStateMachineTransition" id=25]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=26]
+
+[sub_resource type="AnimationNodeStateMachine" id=27]
 resource_local_to_scene = true
-states/attack/node = SubResource( 8 )
+states/attack/node = SubResource( 9 )
 states/attack/position = Vector2( 372, -16.2889 )
-states/fall/node = SubResource( 9 )
+states/fall/node = SubResource( 10 )
 states/fall/position = Vector2( 372, 182 )
-states/hit/node = SubResource( 27 )
+states/hit/node = SubResource( 11 )
 states/hit/position = Vector2( 225, 76 )
-states/idle/node = SubResource( 10 )
+states/idle/node = SubResource( 12 )
 states/idle/position = Vector2( 372, 76 )
-states/jump/node = SubResource( 11 )
+states/jump/node = SubResource( 13 )
 states/jump/position = Vector2( 506, 182 )
-states/run/node = SubResource( 12 )
+states/run/node = SubResource( 14 )
 states/run/position = Vector2( 506, 76 )
-transitions = [ "idle", "jump", SubResource( 13 ), "idle", "run", SubResource( 14 ), "run", "jump", SubResource( 15 ), "jump", "fall", SubResource( 16 ), "fall", "idle", SubResource( 17 ), "run", "fall", SubResource( 18 ), "idle", "fall", SubResource( 19 ), "idle", "attack", SubResource( 20 ), "run", "attack", SubResource( 21 ), "attack", "idle", SubResource( 22 ), "run", "idle", SubResource( 23 ), "idle", "hit", SubResource( 28 ) ]
+transitions = [ "idle", "jump", SubResource( 15 ), "idle", "run", SubResource( 16 ), "run", "jump", SubResource( 17 ), "jump", "fall", SubResource( 18 ), "fall", "idle", SubResource( 19 ), "run", "fall", SubResource( 20 ), "idle", "fall", SubResource( 21 ), "idle", "attack", SubResource( 22 ), "run", "attack", SubResource( 23 ), "attack", "idle", SubResource( 24 ), "run", "idle", SubResource( 25 ), "idle", "hit", SubResource( 26 ) ]
 start_node = "idle"
 graph_offset = Vector2( -101, -37.9369 )
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=25]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=28]
 
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 2
@@ -217,6 +217,7 @@ script = ExtResource( 3 )
 texture = ExtResource( 4 )
 vframes = 11
 hframes = 7
+frame = 2
 
 [node name="body1" type="CollisionShape2D" parent="."]
 visible = false
@@ -232,16 +233,16 @@ disabled = true
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/attack = SubResource( 3 )
 anims/fall = SubResource( 4 )
-anims/hit = SubResource( 26 )
-anims/idle = SubResource( 5 )
-anims/jump = SubResource( 6 )
-anims/run = SubResource( 7 )
+anims/hit = SubResource( 5 )
+anims/idle = SubResource( 6 )
+anims/jump = SubResource( 7 )
+anims/run = SubResource( 8 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource( 24 )
+tree_root = SubResource( 27 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
-parameters/playback = SubResource( 25 )
+parameters/playback = SubResource( 28 )
 
 [node name="Position2D" type="Position2D" parent="."]
 
