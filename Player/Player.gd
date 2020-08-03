@@ -39,7 +39,6 @@ func _physics_process(delta):
 func _do_gravity():
 	y_velo += gravity
 	if grounded and Input.is_action_just_pressed("jump"):
-		_create_memory()
 		y_velo = -jump_force
 	if grounded and y_velo >= 5 or is_on_ceiling():
 		y_velo = 5
@@ -89,20 +88,34 @@ func _get_hit(delta):
 	if facing_right:
 		move_dir += 1
 	else: move_dir -= 1
-	move_and_slide(Vector2(move_dir * move_speed, y_velo), Vector2(0, -1))
+	#move_and_slide(Vector2(move_dir * move_speed, y_velo), Vector2(0, -1))
+
+func _goto_recent_memory():
+	if stats.memory.size() <= 0: 
+		queue_free()
+		return
+	
+	var old_memory = stats.memory.pop_back()
+	global_position = old_memory.global_position
+	stats.remove_old_positions(old_memory.i)
+	stats.set_memories_activity(true)
+	state = MOVE
+	y_velo = 5
 
 func _on_hurtbox_area_entered(area):
-	#hurtbox.create_hitEffect()
-	#stats.health -= area.damage
+	stats.set_memories_activity(false)
+	print(stats.memory.size())
 	state = OUCH
 	y_velo = -jump_force/2
 
-func _create_memory():
+func create_memory():
 	var obj = Memory.instance()
 	var main = get_tree().current_scene
 	main.add_child(obj)
 	obj.global_position = global_position
 	obj.sprite.flip_h = facing_right
+	stats.memory.push_back(obj)
+	obj.array_pos = stats.memory.size()-1
 
 func _make_anim(string):
 	anim_state.travel(string)

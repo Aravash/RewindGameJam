@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://zones_boxes/hurtbox.tscn" type="PackedScene" id=1]
 [ext_resource path="res://zones_boxes/hitbox.tscn" type="PackedScene" id=2]
@@ -70,6 +70,36 @@ tracks/0/keys = {
 "values": [ 23, 22 ]
 }
 
+[sub_resource type="Animation" id=26]
+resource_name = "hit"
+length = 2.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1, 1.4, 1.5, 1.6, 1.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 59, 60, 61, 62, 63, 64, 65, 66, 67, 68 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 2.1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "_goto_recent_memory"
+} ]
+}
+
 [sub_resource type="Animation" id=5]
 length = 1.4
 loop = true
@@ -123,6 +153,9 @@ animation = "attack"
 [sub_resource type="AnimationNodeAnimation" id=9]
 animation = "fall"
 
+[sub_resource type="AnimationNodeAnimation" id=27]
+animation = "hit"
+
 [sub_resource type="AnimationNodeAnimation" id=10]
 animation = "idle"
 
@@ -154,20 +187,25 @@ animation = "run"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=23]
 
+[sub_resource type="AnimationNodeStateMachineTransition" id=28]
+
 [sub_resource type="AnimationNodeStateMachine" id=24]
+resource_local_to_scene = true
 states/attack/node = SubResource( 8 )
 states/attack/position = Vector2( 372, -16.2889 )
 states/fall/node = SubResource( 9 )
 states/fall/position = Vector2( 372, 182 )
+states/hit/node = SubResource( 27 )
+states/hit/position = Vector2( 225, 76 )
 states/idle/node = SubResource( 10 )
 states/idle/position = Vector2( 372, 76 )
 states/jump/node = SubResource( 11 )
 states/jump/position = Vector2( 506, 182 )
 states/run/node = SubResource( 12 )
 states/run/position = Vector2( 506, 76 )
-transitions = [ "idle", "jump", SubResource( 13 ), "idle", "run", SubResource( 14 ), "run", "jump", SubResource( 15 ), "jump", "fall", SubResource( 16 ), "fall", "idle", SubResource( 17 ), "run", "fall", SubResource( 18 ), "idle", "fall", SubResource( 19 ), "idle", "attack", SubResource( 20 ), "run", "attack", SubResource( 21 ), "attack", "idle", SubResource( 22 ), "run", "idle", SubResource( 23 ) ]
+transitions = [ "idle", "jump", SubResource( 13 ), "idle", "run", SubResource( 14 ), "run", "jump", SubResource( 15 ), "jump", "fall", SubResource( 16 ), "fall", "idle", SubResource( 17 ), "run", "fall", SubResource( 18 ), "idle", "fall", SubResource( 19 ), "idle", "attack", SubResource( 20 ), "run", "attack", SubResource( 21 ), "attack", "idle", SubResource( 22 ), "run", "idle", SubResource( 23 ), "idle", "hit", SubResource( 28 ) ]
 start_node = "idle"
-graph_offset = Vector2( 0, -82.9369 )
+graph_offset = Vector2( -101, -37.9369 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=25]
 
@@ -179,19 +217,22 @@ script = ExtResource( 3 )
 texture = ExtResource( 4 )
 vframes = 11
 hframes = 7
-frame = 2
 
 [node name="body1" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2( 0, 2.7808 )
 shape = SubResource( 1 )
 
 [node name="body2" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 14.2376 )
+visible = false
+position = Vector2( 0, 14.3537 )
 shape = SubResource( 2 )
+disabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/attack = SubResource( 3 )
 anims/fall = SubResource( 4 )
+anims/hit = SubResource( 26 )
 anims/idle = SubResource( 5 )
 anims/jump = SubResource( 6 )
 anims/run = SubResource( 7 )
@@ -211,6 +252,14 @@ collision_mask = 0
 [node name="CollisionPolygon2D" parent="Position2D/hurtbox" index="0"]
 polygon = PoolVector2Array( 0, 16, -8, 0, 0, -8, 8, 0, 0, 16 )
 
+[node name="MemoryHurtbox" parent="Position2D" instance=ExtResource( 1 )]
+visible = false
+collision_layer = 32
+collision_mask = 0
+
+[node name="CollisionPolygon2D" parent="Position2D/MemoryHurtbox" index="0"]
+polygon = PoolVector2Array( -8, 0, 0, 16, 8, 0, 0, -8 )
+
 [node name="Attack Hitbox" parent="Position2D" instance=ExtResource( 2 )]
 collision_layer = 0
 collision_mask = 16
@@ -222,8 +271,11 @@ disabled = true
 [node name="PositionTimer" type="Timer" parent="."]
 wait_time = 0.01
 autostart = true
+[connection signal="area_entered" from="Position2D/hurtbox" to="." method="_on_hurtbox_area_entered"]
 [connection signal="timeout" from="PositionTimer" to="." method="_on_PositionTimer_timeout"]
 
 [editable path="Position2D/hurtbox"]
+
+[editable path="Position2D/MemoryHurtbox"]
 
 [editable path="Position2D/Attack Hitbox"]

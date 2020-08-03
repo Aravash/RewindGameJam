@@ -2,8 +2,10 @@ extends Node2D
 
 var stats = PlayerStats
 var is_active = false
-onready var i = stats.player_position.size() - 1
+var is_active2 = true
+var array_pos = 0
 
+onready var i = stats.player_position.size() - 1
 onready var sprite = $Sprite
 onready var anim_tree = $AnimationTree
 onready var anim_state = anim_tree.get("parameters/playback")
@@ -12,7 +14,7 @@ func _ready():
 	$Delay.start(rand_range(1, 4))
 
 func _on_PositionTimer_timeout():
-	if !is_active: return
+	if !is_active or !is_active2: return
 	set_global_position(stats.player_position[i])
 	anim_state.travel(stats.player_anim[i])
 	if stats.facing_right[i] != stats.facing_right[i-1]:
@@ -26,4 +28,5 @@ func _on_Delay_timeout():
 #you only really die when there are no more memories of you
 func _on_hurtbox_area_entered(_area):
 	$hurtbox.create_hitEffect()
+	stats.memory.remove(array_pos)
 	queue_free()
