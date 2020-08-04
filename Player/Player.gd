@@ -3,6 +3,8 @@ extends "res://moving_entity.gd"
 
 const Memory = preload("res://Memory.tscn")
 
+var hit_anim_finished
+
 onready var anim_tree = $AnimationTree
 onready var anim_state = anim_tree.get("parameters/playback")
 onready var pivot = $Position2D
@@ -11,6 +13,7 @@ onready var posTimer = $PositionTimer
 
 var memory_manager
 var memory_delay_time = 1.5
+var camera
 
 var stats = PlayerStats
 var anim_name = ""
@@ -26,6 +29,7 @@ var state = MOVE
 func _ready():
 	._ready()
 	memory_manager = get_parent().get_node("MemoriesManager")
+	camera = get_node("cameraTarget")
 	#stats.connect("no_health", self, "queue_free")
 
 func _physics_process(delta):
@@ -88,10 +92,11 @@ func _reset_state():
 
 func _get_hit(_delta):
 	_make_anim("hit")
-	if facing_right:
-		move_dir += 1
-	else: move_dir -= 1
+	
 	#move_and_slide(Vector2(move_dir * move_speed, y_velo), Vector2(0, -1))
+
+func set_hit_anim_finished_true():
+	hit_anim_finished = true
 
 func _goto_recent_memory():
 	if memory_manager.get_child_count() == 0:
@@ -99,11 +104,10 @@ func _goto_recent_memory():
 		return
 	
 	var old_memory = memory_manager.get_child(0)
-	#this might be incorrect
+	
+	#if camera.pan_to_memory(position, old_memory.position):
 	stats.remove_old_positions(old_memory.i + 1)
 	global_position = old_memory.global_position
-	#stats.set_memories_activity(true)
-	#stats.bababooey(memory_manager, true)
 	stats.player_is_hit = false
 	state = MOVE
 	y_velo = 5
@@ -113,7 +117,6 @@ func _on_hurtbox_area_entered(_area):
 	#stats.bababooey(memory_manager, false)
 	stats.player_is_hit = true
 	state = OUCH
-	y_velo = -jump_force/2
 
 func create_memory():
 	var obj = Memory.instance()
