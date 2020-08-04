@@ -100,7 +100,7 @@ func set_hit_anim_finished_true():
 
 func _goto_recent_memory():
 	if memory_manager.get_child_count() == 0:
-		queue_free()
+		stats.player_lose()
 		return
 	
 	var old_memory = memory_manager.get_child(0)
