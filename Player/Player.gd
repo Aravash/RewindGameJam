@@ -124,7 +124,6 @@ func create_memory():
 	memory_delay_time += 1
 	stats.memory.push_back(obj)
 
-
 func _make_anim(string):
 	anim_state.travel(string)
 	anim_name = string
