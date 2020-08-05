@@ -25,7 +25,7 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3 ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=3]
 resource_name = "walk"
 length = 0.8
 loop = true
@@ -42,25 +42,25 @@ tracks/0/keys = {
 "values": [ 4, 5, 6, 7 ]
 }
 
-[sub_resource type="AnimationNodeAnimation" id=3]
+[sub_resource type="AnimationNodeAnimation" id=4]
 animation = "idle"
 
-[sub_resource type="AnimationNodeAnimation" id=7]
+[sub_resource type="AnimationNodeAnimation" id=5]
 animation = "walk"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=8]
+[sub_resource type="AnimationNodeStateMachineTransition" id=6]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=9]
+[sub_resource type="AnimationNodeStateMachineTransition" id=7]
 
-[sub_resource type="AnimationNodeStateMachine" id=4]
-states/idle/node = SubResource( 3 )
+[sub_resource type="AnimationNodeStateMachine" id=8]
+states/idle/node = SubResource( 4 )
 states/idle/position = Vector2( 303, 74 )
-states/walk/node = SubResource( 7 )
+states/walk/node = SubResource( 5 )
 states/walk/position = Vector2( 467, 74 )
-transitions = [ "idle", "walk", SubResource( 8 ), "walk", "idle", SubResource( 9 ) ]
+transitions = [ "idle", "walk", SubResource( 6 ), "walk", "idle", SubResource( 7 ) ]
 start_node = "idle"
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=5]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=9]
 
 [node name="SlimeEnemy" type="KinematicBody2D"]
 collision_layer = 8
@@ -77,21 +77,19 @@ hframes = 8
 frame = 3
 
 [node name="WorldBody" type="CollisionShape2D" parent="."]
-visible = false
 shape = SubResource( 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/idle = SubResource( 2 )
-anims/walk = SubResource( 6 )
+anims/walk = SubResource( 3 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource( 4 )
+tree_root = SubResource( 8 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
-parameters/playback = SubResource( 5 )
+parameters/playback = SubResource( 9 )
 
 [node name="Position2D" type="Position2D" parent="."]
-visible = false
 
 [node name="hurtbox" parent="Position2D" instance=ExtResource( 3 )]
 position = Vector2( 0, 8 )
@@ -100,14 +98,14 @@ collision_mask = 0
 
 [node name="CollisionPolygon2D" parent="Position2D/hurtbox" index="0"]
 position = Vector2( 0, -8 )
-polygon = PoolVector2Array( -16, -16, -16, 8, 16, 8, 16, -16 )
+polygon = PoolVector2Array( -13.611, -6.82593, -14.4636, 7.92363, 14.2682, 7.83837, 13.5862, -6.57015 )
 
 [node name="hitbox" parent="Position2D" instance=ExtResource( 5 )]
 collision_layer = 8
 collision_mask = 4
 
 [node name="CollisionPolygon2D" parent="Position2D/hitbox" index="0"]
-polygon = PoolVector2Array( -13.5982, -6.76161, 13.6368, -6.72596, 13.6011, 6.67766, -13.5626, 6.71331 )
+polygon = PoolVector2Array( -6.10834, -6.22912, 7.10658, -6.14387, 11.1137, -2.22202, 13.6714, 5.02487, 13.7567, 7.32683, -13.4405, 7.32683, -12.5027, 4.00178, -10.286, -1.11367 )
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.1
