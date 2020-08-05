@@ -15,4 +15,4 @@ func _on_ReturnToMain_pressed():
 	LevelSelectMenu.visible = false
 
 func _on_Test_pressed():
-	get_tree().change_scene("res://scenes/level.tscn")
+	get_tree().change_scene("res://scenes/level1.tscn")

@@ -1,0 +1,93 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://sprites/text/FFText.tres" type="DynamicFont" id=1]
+[ext_resource path="res://scenes/LoseUI.gd" type="Script" id=2]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+
+[node name="LoseUI" type="Control" parent="."]
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LoseText" type="Label" parent="LoseUI"]
+margin_top = 16.0
+margin_right = 320.0
+margin_bottom = 56.0
+custom_fonts/font = ExtResource( 1 )
+text = "You Lost All of Your Memories..."
+align = 1
+valign = 1
+
+[node name="Retry" type="Button" parent="LoseUI"]
+margin_left = 88.0
+margin_top = 48.0
+margin_right = 232.0
+margin_bottom = 73.0
+custom_fonts/font = ExtResource( 1 )
+text = "Retry"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MainMenu" type="Button" parent="LoseUI"]
+margin_left = 96.0
+margin_top = 114.756
+margin_right = 224.0
+margin_bottom = 136.756
+custom_fonts/font = ExtResource( 1 )
+text = "Main Menu"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="WinUI" type="Control" parent="."]
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="WinText" type="Label" parent="WinUI"]
+margin_top = 16.0
+margin_right = 320.0
+margin_bottom = 56.0
+custom_fonts/font = ExtResource( 1 )
+text = "Level Complete"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Next Level" type="Button" parent="WinUI"]
+margin_left = 88.0
+margin_top = 115.0
+margin_right = 232.0
+margin_bottom = 145.0
+custom_fonts/font = ExtResource( 1 )
+text = "Next Level"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Menu Menu" type="Button" parent="WinUI"]
+margin_left = 208.0
+margin_top = 152.0
+margin_right = 315.0
+margin_bottom = 174.0
+custom_fonts/font = ExtResource( 1 )
+text = "Main Menu"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="LoseUI/Retry" to="LoseUI" method="_on_Retry_pressed"]
+[connection signal="pressed" from="LoseUI/MainMenu" to="LoseUI" method="_on_MainMenu_pressed"]
+[connection signal="pressed" from="WinUI/Next Level" to="WinUI" method="_on_Retry_pressed"]
+[connection signal="pressed" from="WinUI/Menu Menu" to="WinUI" method="_on_MainMenu_pressed"]

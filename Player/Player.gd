@@ -3,6 +3,8 @@ extends "res://moving_entity.gd"
 
 const Memory = preload("res://Memory.tscn")
 
+var hit_anim_finished
+
 onready var anim_tree = $AnimationTree
 onready var anim_state = anim_tree.get("parameters/playback")
 onready var pivot = $Position2D
@@ -10,7 +12,8 @@ onready var hurtbox = $Position2D/hurtbox
 onready var posTimer = $PositionTimer
 
 var memory_manager
-var memory_delay_time = 1.5
+var memory_delay_time = 1
+var camera
 
 var stats = PlayerStats
 var anim_name = ""
@@ -18,7 +21,8 @@ var anim_name = ""
 enum{
 	MOVE,
 	OUCH,
-	ATTACK
+	ATTACK,
+	STILL
 }
 
 var state = MOVE
@@ -26,6 +30,8 @@ var state = MOVE
 func _ready():
 	._ready()
 	memory_manager = get_parent().get_node("MemoriesManager")
+	camera = get_node("cameraTarget")
+	stats.remove_old_positions(0)
 	#stats.connect("no_health", self, "queue_free")
 
 func _physics_process(delta):
@@ -35,6 +41,7 @@ func _physics_process(delta):
 		MOVE: _do_move(delta)
 		OUCH: _get_hit(delta)
 		ATTACK: _make_anim("attack")
+		STILL: do_still()
 	
 	grounded = is_on_floor()
 	_do_gravity()
@@ -72,6 +79,11 @@ func _do_move(_delta):
 	if Input.is_action_just_pressed("attack") && grounded: 
 		state = ATTACK
 
+func do_still():
+	_make_anim("idle")
+# warning-ignore:return_value_discarded
+	move_and_slide(Vector2(move_dir * move_speed, y_velo), Vector2(0, -1))
+
 func _do_rotation():
 	if facing_right and move_dir > 0:
 		_flip()
@@ -88,22 +100,22 @@ func _reset_state():
 
 func _get_hit(_delta):
 	_make_anim("hit")
-	if facing_right:
-		move_dir += 1
-	else: move_dir -= 1
+	
 	#move_and_slide(Vector2(move_dir * move_speed, y_velo), Vector2(0, -1))
+
+func set_hit_anim_finished_true():
+	hit_anim_finished = true
 
 func _goto_recent_memory():
 	if memory_manager.get_child_count() == 0:
-		queue_free()
+		stats.make_visible("LoseUI")
 		return
 	
 	var old_memory = memory_manager.get_child(0)
-	#this might be incorrect
+	
+	#if camera.pan_to_memory(position, old_memory.position):
 	stats.remove_old_positions(old_memory.i + 1)
 	global_position = old_memory.global_position
-	#stats.set_memories_activity(true)
-	#stats.bababooey(memory_manager, true)
 	stats.player_is_hit = false
 	state = MOVE
 	y_velo = 5
@@ -113,7 +125,6 @@ func _on_hurtbox_area_entered(_area):
 	#stats.bababooey(memory_manager, false)
 	stats.player_is_hit = true
 	state = OUCH
-	y_velo = -jump_force/2
 
 func create_memory():
 	var obj = Memory.instance()
@@ -132,3 +143,7 @@ func _on_PositionTimer_timeout():
 	stats.player_position.push_back(get_global_position())
 	stats.player_anim.push_back(anim_name)
 	stats.facing_right.push_back(facing_right)
+
+# warning-ignore:unused_argument
+func _on_WinSpotHurtBox_area_entered(area):
+	state = STILL

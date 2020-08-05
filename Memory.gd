@@ -24,6 +24,7 @@ func _on_Delay_timeout():
 	print("timer out")
 	$hurtbox/CollisionPolygon2D.disabled = false
 	is_active = true
+
 #you only really die when there are no more memories of you
 func _on_hurtbox_area_entered(_area):
 	$hurtbox.create_hitEffect()
