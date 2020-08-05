@@ -21,7 +21,8 @@ var anim_name = ""
 enum{
 	MOVE,
 	OUCH,
-	ATTACK
+	ATTACK,
+	STILL
 }
 
 var state = MOVE
@@ -30,6 +31,7 @@ func _ready():
 	._ready()
 	memory_manager = get_parent().get_node("MemoriesManager")
 	camera = get_node("cameraTarget")
+	stats.remove_old_positions(0)
 	#stats.connect("no_health", self, "queue_free")
 
 func _physics_process(delta):
@@ -39,6 +41,7 @@ func _physics_process(delta):
 		MOVE: _do_move(delta)
 		OUCH: _get_hit(delta)
 		ATTACK: _make_anim("attack")
+		STILL: do_still()
 	
 	grounded = is_on_floor()
 	_do_gravity()
@@ -76,6 +79,10 @@ func _do_move(_delta):
 	if Input.is_action_just_pressed("attack") && grounded: 
 		state = ATTACK
 
+func do_still():
+	_make_anim("idle")
+	move_and_slide(Vector2(move_dir * move_speed, y_velo), Vector2(0, -1))
+
 func _do_rotation():
 	if facing_right and move_dir > 0:
 		_flip()
@@ -100,7 +107,7 @@ func set_hit_anim_finished_true():
 
 func _goto_recent_memory():
 	if memory_manager.get_child_count() == 0:
-		stats.player_lose()
+		stats.make_visible("LoseUI")
 		return
 	
 	var old_memory = memory_manager.get_child(0)
@@ -135,3 +142,6 @@ func _on_PositionTimer_timeout():
 	stats.player_position.push_back(get_global_position())
 	stats.player_anim.push_back(anim_name)
 	stats.facing_right.push_back(facing_right)
+
+func _on_WinSpotHurtBox_area_entered(area):
+	state = STILL

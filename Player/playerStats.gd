@@ -13,5 +13,5 @@ func remove_old_positions(change):
 	player_anim.resize(change)
 	facing_right.resize(change)
 
-func player_lose():
-	get_tree().get_root().get_child(1).get_node("CanvasLayer").get_node("CanvasControl").visible = true
+func make_visible(element):
+	get_tree().get_root().get_child(1).get_node("CanvasLayer").get_node(element).visible = true
