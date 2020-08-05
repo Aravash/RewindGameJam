@@ -12,7 +12,7 @@ onready var hurtbox = $Position2D/hurtbox
 onready var posTimer = $PositionTimer
 
 var memory_manager
-var memory_delay_time = 1.5
+var memory_delay_time = 1
 var camera
 
 var stats = PlayerStats
@@ -81,6 +81,7 @@ func _do_move(_delta):
 
 func do_still():
 	_make_anim("idle")
+# warning-ignore:return_value_discarded
 	move_and_slide(Vector2(move_dir * move_speed, y_velo), Vector2(0, -1))
 
 func _do_rotation():
@@ -143,5 +144,6 @@ func _on_PositionTimer_timeout():
 	stats.player_anim.push_back(anim_name)
 	stats.facing_right.push_back(facing_right)
 
+# warning-ignore:unused_argument
 func _on_WinSpotHurtBox_area_entered(area):
 	state = STILL
