@@ -1,102 +1,102 @@
 [gd_scene load_steps=28 format=2]
 
-[ext_resource path="res://particle effect/smoke.gd" type="Script" id=1]
-[ext_resource path="res://particle effect/smoke_100x100px.png" type="Texture" id=2]
+[ext_resource path="res://particle effect/3_100x100px.png" type="Texture" id=1]
+[ext_resource path="res://particle effect/smoke.gd" type="Script" id=2]
 
 [sub_resource type="AtlasTexture" id=1]
-atlas = ExtResource( 2 )
+atlas = ExtResource( 1 )
 region = Rect2( 0, 0, 100, 100 )
 
 [sub_resource type="AtlasTexture" id=2]
-atlas = ExtResource( 2 )
+atlas = ExtResource( 1 )
 region = Rect2( 100, 0, 100, 100 )
 
 [sub_resource type="AtlasTexture" id=3]
-atlas = ExtResource( 2 )
+atlas = ExtResource( 1 )
 region = Rect2( 200, 0, 100, 100 )
 
 [sub_resource type="AtlasTexture" id=4]
-atlas = ExtResource( 2 )
+atlas = ExtResource( 1 )
 region = Rect2( 300, 0, 100, 100 )
 
 [sub_resource type="AtlasTexture" id=5]
-atlas = ExtResource( 2 )
+atlas = ExtResource( 1 )
 region = Rect2( 400, 0, 100, 100 )
 
 [sub_resource type="AtlasTexture" id=6]
-atlas = ExtResource( 2 )
+atlas = ExtResource( 1 )
 region = Rect2( 500, 0, 100, 100 )
 
 [sub_resource type="AtlasTexture" id=7]
-atlas = ExtResource( 2 )
+atlas = ExtResource( 1 )
 region = Rect2( 0, 100, 100, 100 )
 
 [sub_resource type="AtlasTexture" id=8]
-atlas = ExtResource( 2 )
+atlas = ExtResource( 1 )
 region = Rect2( 100, 100, 100, 100 )
 
 [sub_resource type="AtlasTexture" id=9]
-atlas = ExtResource( 2 )
+atlas = ExtResource( 1 )
 region = Rect2( 200, 100, 100, 100 )
 
 [sub_resource type="AtlasTexture" id=10]
-atlas = ExtResource( 2 )
+atlas = ExtResource( 1 )
 region = Rect2( 300, 100, 100, 100 )
 
 [sub_resource type="AtlasTexture" id=11]
-atlas = ExtResource( 2 )
+atlas = ExtResource( 1 )
 region = Rect2( 400, 100, 100, 100 )
 
 [sub_resource type="AtlasTexture" id=12]
-atlas = ExtResource( 2 )
+atlas = ExtResource( 1 )
 region = Rect2( 500, 100, 100, 100 )
 
 [sub_resource type="AtlasTexture" id=13]
-atlas = ExtResource( 2 )
+atlas = ExtResource( 1 )
 region = Rect2( 0, 200, 100, 100 )
 
 [sub_resource type="AtlasTexture" id=14]
-atlas = ExtResource( 2 )
+atlas = ExtResource( 1 )
 region = Rect2( 100, 200, 100, 100 )
 
 [sub_resource type="AtlasTexture" id=15]
-atlas = ExtResource( 2 )
+atlas = ExtResource( 1 )
 region = Rect2( 200, 200, 100, 100 )
 
 [sub_resource type="AtlasTexture" id=16]
-atlas = ExtResource( 2 )
+atlas = ExtResource( 1 )
 region = Rect2( 300, 200, 100, 100 )
 
 [sub_resource type="AtlasTexture" id=17]
-atlas = ExtResource( 2 )
+atlas = ExtResource( 1 )
 region = Rect2( 400, 200, 100, 100 )
 
 [sub_resource type="AtlasTexture" id=18]
-atlas = ExtResource( 2 )
+atlas = ExtResource( 1 )
 region = Rect2( 500, 200, 100, 100 )
 
 [sub_resource type="AtlasTexture" id=19]
-atlas = ExtResource( 2 )
+atlas = ExtResource( 1 )
 region = Rect2( 0, 300, 100, 100 )
 
 [sub_resource type="AtlasTexture" id=20]
-atlas = ExtResource( 2 )
+atlas = ExtResource( 1 )
 region = Rect2( 100, 300, 100, 100 )
 
 [sub_resource type="AtlasTexture" id=21]
-atlas = ExtResource( 2 )
+atlas = ExtResource( 1 )
 region = Rect2( 200, 300, 100, 100 )
 
 [sub_resource type="AtlasTexture" id=22]
-atlas = ExtResource( 2 )
+atlas = ExtResource( 1 )
 region = Rect2( 300, 300, 100, 100 )
 
 [sub_resource type="AtlasTexture" id=23]
-atlas = ExtResource( 2 )
+atlas = ExtResource( 1 )
 region = Rect2( 400, 300, 100, 100 )
 
 [sub_resource type="AtlasTexture" id=24]
-atlas = ExtResource( 2 )
+atlas = ExtResource( 1 )
 region = Rect2( 500, 300, 100, 100 )
 
 [sub_resource type="SpriteFrames" id=25]
@@ -111,4 +111,4 @@ animations = [ {
 position = Vector2( 0, -8 )
 rotation = 3.14159
 frames = SubResource( 25 )
-script = ExtResource( 1 )
+script = ExtResource( 2 )

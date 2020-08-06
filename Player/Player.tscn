@@ -7,7 +7,7 @@
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 5.91216
-height = 17.173
+height = 17.2028
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 5.61238, 2.82258 )
@@ -219,14 +219,16 @@ script = ExtResource( 3 )
 texture = ExtResource( 4 )
 vframes = 11
 hframes = 7
+frame = 2
 
 [node name="body1" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 2.7808 )
+position = Vector2( 0, 2.21675 )
 shape = SubResource( 1 )
 
 [node name="body2" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 14.0119 )
+position = Vector2( 0, 14.5466 )
 shape = SubResource( 2 )
+disabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/attack = SubResource( 3 )

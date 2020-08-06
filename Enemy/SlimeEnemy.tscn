@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://sprites/enemy/slime-Sheet.png" type="Texture" id=1]
 [ext_resource path="res://Enemy/SlimeEnemy.gd" type="Script" id=2]
@@ -8,6 +8,36 @@
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 13.5938, 6.7636 )
+
+[sub_resource type="Animation" id=10]
+resource_name = "die"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 17, 18, 19, 20 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.5 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "queue_free"
+} ]
+}
 
 [sub_resource type="Animation" id=2]
 length = 0.8
@@ -42,6 +72,9 @@ tracks/0/keys = {
 "values": [ 4, 5, 6, 7 ]
 }
 
+[sub_resource type="AnimationNodeAnimation" id=11]
+animation = "die"
+
 [sub_resource type="AnimationNodeAnimation" id=4]
 animation = "idle"
 
@@ -52,12 +85,18 @@ animation = "walk"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=7]
 
+[sub_resource type="AnimationNodeStateMachineTransition" id=12]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=13]
+
 [sub_resource type="AnimationNodeStateMachine" id=8]
+states/die/node = SubResource( 11 )
+states/die/position = Vector2( 467, 181 )
 states/idle/node = SubResource( 4 )
 states/idle/position = Vector2( 303, 74 )
 states/walk/node = SubResource( 5 )
 states/walk/position = Vector2( 467, 74 )
-transitions = [ "idle", "walk", SubResource( 6 ), "walk", "idle", SubResource( 7 ) ]
+transitions = [ "idle", "walk", SubResource( 6 ), "walk", "idle", SubResource( 7 ), "walk", "die", SubResource( 12 ), "idle", "die", SubResource( 13 ) ]
 start_node = "idle"
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=9]
@@ -74,12 +113,13 @@ position = Vector2( 0, -3.5 )
 texture = ExtResource( 1 )
 vframes = 3
 hframes = 8
-frame = 3
+frame = 1
 
 [node name="WorldBody" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/die = SubResource( 10 )
 anims/idle = SubResource( 2 )
 anims/walk = SubResource( 3 )
 
@@ -105,7 +145,7 @@ collision_layer = 8
 collision_mask = 4
 
 [node name="CollisionPolygon2D" parent="Position2D/hitbox" index="0"]
-polygon = PoolVector2Array( -6.10834, -6.22912, 7.10658, -6.14387, 11.1137, -2.22202, 13.6714, 5.02487, 13.7567, 7.32683, -13.4405, 7.32683, -12.5027, 4.00178, -10.286, -1.11367 )
+polygon = PoolVector2Array( -6.34241, -2.50352, 6.50534, -2.56619, 8.69886, 7.46132, -8.53593, 7.46132 )
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.1

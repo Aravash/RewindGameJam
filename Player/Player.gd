@@ -12,7 +12,7 @@ onready var hurtbox = $Position2D/hurtbox
 onready var posTimer = $PositionTimer
 
 var memory_manager
-var memory_delay_time = 1
+var memory_delay_time = 1.2
 var camera
 
 var stats = PlayerStats
@@ -132,7 +132,7 @@ func create_memory():
 	memory_manager.add_child(obj)
 	obj.global_position = global_position
 	obj.sprite.flip_h = facing_right
-	memory_delay_time += 1
+	memory_delay_time += .8
 	stats.memory.push_back(obj)
 
 func _make_anim(string):

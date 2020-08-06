@@ -9,10 +9,27 @@ onready var timer = $Timer
 var timeout = false
 var last_position = Vector2.ZERO
 
+enum{
+	ALIVE,
+	DEAD
+}
+
+var state = ALIVE
+
+# warning-ignore:unused_argument
 func _physics_process(delta):
+	move_dir = 0
+	
+	match(state):
+		ALIVE: do_move()
+		DEAD: anim_state.travel("die")
+	
 	grounded = is_on_floor()
 	_do_gravity()
-	move_dir = 0
+	# warning-ignore:return_value_discarded
+	move_and_slide(Vector2(move_dir * move_speed, y_velo), Vector2(0, -1))
+
+func do_move():
 	
 	anim_state.travel("walk")
 	if facing_right:
@@ -26,9 +43,6 @@ func _physics_process(delta):
 			timeout = false
 			timer.start(0.1)
 	last_position.x = position.x
-	
-# warning-ignore:return_value_discarded
-	move_and_slide(Vector2(move_dir * move_speed, y_velo), Vector2(0, -1))
 
 #checks if the two points are near enough based on the 3rd input
 func _near_enough(point_a, point_b, threshold):
@@ -39,9 +53,9 @@ func _on_hurtbox_area_entered(area):
 	$Stats.health -= area.damage
 
 func _on_Stats_no_health():
-	$Position2D/hurtbox.create_hitEffect()
+	state = DEAD
+	$Position2D/hitbox.queue_free()
 	player.create_memory()
-	queue_free()
 
 func _on_Timer_timeout():
 	timeout = true
